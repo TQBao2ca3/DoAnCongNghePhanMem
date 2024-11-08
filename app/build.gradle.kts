@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.demo_cnpm"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.demo_cnpm"
