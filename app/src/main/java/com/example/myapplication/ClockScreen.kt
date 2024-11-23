@@ -81,7 +81,6 @@ import java.util.TimeZone
 import kotlin.math.cos
 import kotlin.math.sin
 
-
 @Composable
 fun ClockApp() {
     var isDarkTheme by remember { mutableStateOf(false) }
@@ -299,7 +298,7 @@ fun ClockScreen(
                         Text(
                             text = timeText,
                             style = MaterialTheme.typography.headlineLarge,
-                            color = if (isDarkTheme) Color.Black else Color.Black,// DAY LA BUG
+                            color = if (isDarkTheme) Color.White else Color.Black,// DAY LA BUG
                             textAlign = TextAlign.Center
                         )
 
@@ -314,54 +313,54 @@ fun ClockScreen(
 
                     Spacer(modifier = Modifier.height(40.dp))
 
-                    // Time format toggle (12h / 24h)
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        // Outer circle with light border
-                        Box(
-                            modifier = Modifier
-                                .size(120.dp) // Size for the outer circle
-                                .background(
-                                    color = Color.White, // Outer circle color (white)
-                                    shape = CircleShape
-                                )
-                                .border(
-                                    2.dp,
-                                    color = Color.LightGray,
-                                    shape = CircleShape
-                                ) // Light blue border for the outer circle
-                                .padding(8.dp) // Padding for spacing between outer and inner circle
+                    // Chỉ hiển thị nút 12h/24h khi ở chế độ Digital
+                    if (clockMode == ClockMode.DIGITAL) {
+                        // Time format toggle (12h / 24h)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            // Inner circle with the time toggle
+                            // Outer circle with light border
                             Box(
                                 modifier = Modifier
-                                    .size(110.dp) // Inner circle size (smaller than outer circle)
+                                    .size(120.dp)
                                     .background(
-                                        color = Color(0xFF1E88E5), // Inner circle color (solid blue)
+                                        color = Color.White,
                                         shape = CircleShape
                                     )
-                                    .clickable {
-                                        is24HourFormat = !is24HourFormat
-                                    } // Toggle 12h/24h
-                                ,
-                                contentAlignment = Alignment.Center // Center the text inside the inner circle
+                                    .border(
+                                        2.dp,
+                                        color = Color.LightGray,
+                                        shape = CircleShape
+                                    )
+                                    .padding(8.dp)
                             ) {
-                                Text(
-                                    text = if (is24HourFormat) "24h" else "12h", // Display 24h or 12h
-                                    color = Color.White, // Text color inside inner circle
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp // Adjust font size as needed
-                                )
+                                // Inner circle with the time toggle
+                                Box(
+                                    modifier = Modifier
+                                        .size(110.dp)
+                                        .background(
+                                            color = Color(0xFF1E88E5),
+                                            shape = CircleShape
+                                        )
+                                        .clickable {
+                                            is24HourFormat = !is24HourFormat
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = if (is24HourFormat) "24h" else "12h",
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 18.sp
+                                    )
+                                }
                             }
                         }
+
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
-
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
                     // Row with two buttons for switching clock modes
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
